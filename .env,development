@@ -1,0 +1,11 @@
+ECHO is on.
+# 🌐 Server Configuration
+PORT=5002
+
+MONGO_URI=mongodb://localhost:27017/user-api
+
+
+
+# 🔐 JWT Secrets
+JWT_SECRET=superSecretKey
+REFRESH_TOKEN_SECRET=superRefreshSecretKey
