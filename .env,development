@@ -1,10 +1,8 @@
 ECHO is on.
 # 🌐 Server Configuration
 PORT=5002
-
-MONGO_URI=mongodb://localhost:27017/user-api
-
-
+MONGO_URI=mongodb+srv://wise11jeff:PORT=5002
+MONGO_URI=mongodb+srv://wise11jeff:<your_db_password>@cluster0.ylwiw.mongodb.net/user-profiles?retryWrites=true&w=majority&appName=Cluster0@cluster0.ylwiw.mongodb.net/user-profiles?retryWrites=true&w=majority&appName=Cluster0
 
 # 🔐 JWT Secrets
 JWT_SECRET=superSecretKey
