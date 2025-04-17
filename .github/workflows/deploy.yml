@@ -2,7 +2,7 @@ name: Deploy User API to VPS
 
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   deploy:
@@ -22,6 +22,6 @@ jobs:
           port: 22
           script: |
             cd /home/ubuntu/user-api
-            git pull origin master
+            git pull origin main
             npm install
             pm2 restart user-api
