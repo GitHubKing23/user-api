@@ -8,10 +8,10 @@ const {
   createOrUpdateUser,
   getUser,
   uploadAvatar,
-  updateUserProfile, // ✅ Add this!
+  updateUserProfile,
 } = require('../controllers/userController');
 
-// ✅ JWT Middleware (ensure correct import)
+// ✅ JWT Middleware
 const authenticate = require('../middleware/authenticate');
 
 // 🔧 Configure multer for file uploads
@@ -32,8 +32,11 @@ const upload = multer({ storage });
 router.post('/', createOrUpdateUser);
 router.get('/:address', getUser);
 router.post('/avatar', upload.single('avatar'), uploadAvatar);
+router.put('/update', authenticate, updateUserProfile);
 
-// 🔐 JWT-protected route to update profile
-router.put('/update', authenticate, updateUserProfile); // ✅ FIXED
+// ✅ Health Check Route
+router.get('/health', (req, res) => {
+  res.json({ status: "✅ User API is healthy!" });
+});
 
 module.exports = router;
