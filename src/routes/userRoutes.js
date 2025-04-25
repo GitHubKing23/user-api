@@ -30,13 +30,15 @@ const upload = multer({ storage });
 
 // 📌 Routes
 router.post('/', createOrUpdateUser);
-router.get('/:address', getUser);
 router.post('/avatar', upload.single('avatar'), uploadAvatar);
 router.put('/update', authenticate, updateUserProfile);
 
-// ✅ Health Check Route
+// ✅ Health Check Route (placed BEFORE dynamic route)
 router.get('/health', (req, res) => {
   res.json({ status: "✅ User API is healthy!" });
 });
+
+// 🚨 Dynamic route LAST to avoid conflicts
+router.get('/:address', getUser);
 
 module.exports = router;
