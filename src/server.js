@@ -6,7 +6,6 @@ const dotenv = require("dotenv");
 const envFilePath = path.resolve(__dirname, "../.env");
 dotenv.config({ path: envFilePath });
 
-// ✅ Debug: Show .env loading status
 console.log("📦 Loaded .env file from:", envFilePath);
 console.log("📂 File exists?", fs.existsSync(envFilePath));
 console.log(" - PORT:", process.env.PORT);
@@ -18,8 +17,26 @@ const cors = require("cors");
 
 const app = express();
 
-// ✅ Middleware
-app.use(cors());
+// ✅ Enhanced CORS Middleware
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://sportifyinsider.com"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.warn(`❌ Blocked by CORS: ${origin}`);
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+}));
+
 app.use(express.json());
 
 // ✅ Serve avatar uploads
@@ -45,7 +62,7 @@ app.get("/", (req, res) => {
   res.send("✅ User API is live!");
 });
 
-// ✅ Start Server (listen on all network interfaces)
+// ✅ Start Server
 const PORT = process.env.PORT || 5002;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Server running on http://0.0.0.0:${PORT}`);
