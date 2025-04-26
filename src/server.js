@@ -17,15 +17,15 @@ const cors = require("cors");
 
 const app = express();
 
-// ✅ Enhanced CORS Middleware
+// ✅ CORS Configuration (Dev-Friendly)
 const allowedOrigins = [
   "http://localhost:3000",
   "https://sportifyinsider.com"
 ];
 
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV === "development") {
       callback(null, true);
     } else {
       console.warn(`❌ Blocked by CORS: ${origin}`);
